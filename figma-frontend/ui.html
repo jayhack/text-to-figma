@@ -1,0 +1,163 @@
+<style>
+  body {
+    padding: 0px;
+    margin: 0px;
+  }
+  html {
+    padding: 0px;
+    margin: 0px;
+  }
+  #loader {
+    width: 20px;
+    height: 20px;
+    border: 5px solid #fff;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* #navbar {
+  background-color: #333;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+} */
+  #outer {
+    background: #191d24;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    box-sizing: border-box;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  #prompt {
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: Inter;
+    font-size: 24px;
+    border: none;
+    outline: none;
+    background-color: #2a303c;
+    color: white;
+    border: 1px solid #434955;
+    resize: none;
+  }
+
+  #prompt:focus {
+    border: 1px solid #434955;
+    outline: none !important;
+  }
+
+  #button {
+    background-color: #6419e6;
+    color: white;
+    font-family: Inter;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    width: 100%;
+  }
+</style>
+
+<div id="outer">
+  <textarea
+    id="prompt"
+    placeholder="Describe your component"
+    size="50"
+    rows="4"
+  ></textarea>
+  <button id="button">🚀 Send it</button>
+</div>
+<!-- <button
+  id="save"
+  style="
+    padding: 10px;
+    margin-top: 20px;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  "
+>
+  Submit Shapes
+</button> -->
+<script>
+  //##########################################################################################
+  //# BACKEND MESSAGE HANDLING
+  //##########################################################################################
+
+  window.onmessage = async (event) => {
+    console.log("Frontend received message from backend: ", {
+      data: event.data,
+    });
+    if (event.data.pluginMessage.type === "loading-complete") {
+      console.log("Loading complete");
+      const loader = document.getElementById("button");
+      loader.innerHTML = "🚀 Send it";
+      const promptBar = document.querySelector("#prompt");
+      promptBar.select();
+    }
+    // if (event.data.pluginMessage.type === "save-scene") {
+    //   const response = await saveScene(event.data.pluginMessage.scene);
+    //   console.log("Saved scene: ", { response });
+    // } else if (event.data.pluginMessage.type === "run-prompt") {
+    //   const { task, data } = data.pluginMessage;
+    //   const response = await runPrompt(task, data);
+    //   console.log("Response from server: ", response);
+    //   parent.postMessage({ pluginMessage: response }, "*");
+    // }
+  };
+
+  //##########################################################################################
+  //# COMMS WITH BACKEND
+  //##########################################################################################
+
+  const submitPrompt = (prompt) => {
+    console.log(`Submitting prompt: ${prompt}`);
+    parent.postMessage(
+      {
+        pluginMessage: {
+          type: "submit-prompt",
+          prompt,
+        },
+      },
+      "*"
+    );
+  };
+
+  //##########################################################################################
+  //# EVENT LISTENER
+  //##########################################################################################
+
+  const promptBar = document.querySelector("#prompt");
+  promptBar.addEventListener("keyup", async (event) => {
+    if (event.key === "Enter") {
+      const loader = document.getElementById("button");
+      loader.innerHTML = "Loading...";
+      promptBar.value = event.target.value.trim();
+      submitPrompt(event.target.value.trim());
+    }
+  });
+</script>

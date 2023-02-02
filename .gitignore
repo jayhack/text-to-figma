@@ -1,0 +1,9 @@
+# Node
+*.log
+*.log.*
+figma-frontend/node_modules
+
+figma-frontend/out/
+figma-frontend/dist/
+figma-frontend/code.js
+figma-backend/venv

@@ -1,0 +1,10 @@
+{
+  "name": "text-to-figma",
+  "id": "1169694146633959910",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": [
+    "figma"
+  ],
+  "ui": "ui.html"
+}

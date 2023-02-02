@@ -1,0 +1,19 @@
+{
+  "name": "text-to-figma",
+  "version": "1.0.0",
+  "description": "Your Figma Plugin",
+  "main": "code.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "npm run build -- --watch"
+  },
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.55.1",
+    "typescript": "*"
+  },
+  "dependencies": {
+    "yaml": "^2.1.3"
+  }
+}
