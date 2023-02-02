@@ -8,3 +8,6 @@ figma-frontend/dist/
 figma-frontend/code.js
 figma-backend/venv
 */__pycache__/*
+
+# python
+*.pyc
