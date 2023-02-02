@@ -4,9 +4,6 @@ This repo is an open-source implementation of text-to-figma, [as showcased on Tw
 
 This code is presented as-is and may require some legwork to get it running on your own machine.
 
-# Overview
-
-This 
 
 ## Set up Frontend (Figma Plugin)
 
